@@ -17,18 +17,18 @@ struct MainView: View {
                 Spacer()
                 
                 VStack(spacing: 10) {
-                    Text("瘦了么")
+                    Text(LocalizedStringKey("APP_TITLE"))
                         .font(.system(size: 70, weight: .black))
                         .foregroundColor(.green)
                     
-                    Text("体重不会骗人")
+                    Text(LocalizedStringKey("SLOGAN_WEIGHT_NEVER_LIES"))
                         .font(.headline)
                         .foregroundColor(.gray)
                         .tracking(5)
                 }
                 
                 if let currentSettings = settings.first {
-                    Text("已連續面對現實 \(currentSettings.checkInStreak) 天")
+                    Text(String(format: String(localized: "DAYS_FACING_REALITY"), currentSettings.checkInStreak))
                         .font(.title3)
                         .foregroundColor(.white.opacity(0.8))
                 }
@@ -42,20 +42,20 @@ struct MainView: View {
                             .frame(width: 80, height: 70)
                             .foregroundColor(.green)
                         
-                        Text("今日已記錄: \(lastRecord.weight, specifier: "%.1f") kg")
+                        Text(String(format: String(localized: "TODAY_RECORDED"), lastRecord.weight))
                             .font(.system(size: 24, weight: .bold))
                             .foregroundColor(.white)
                         
-                        Text("沒瘦也得填，明天繼續。")
+                        Text(LocalizedStringKey("NOT_THINNER_FILL_TOMORROW"))
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }
                 } else {
                     Button(action: { showingCheckIn = true }) {
                         VStack(spacing: 10) {
-                            Text("立即簽到")
+                            Text(LocalizedStringKey("CHECK_IN_NOW"))
                                 .font(.system(size: 30, weight: .black))
-                            Text("你可以不瘦，但你不能不面對")
+                            Text(LocalizedStringKey("NOT_THINNER_MUST_FACE"))
                                 .font(.caption)
                         }
                         .foregroundColor(.black)
@@ -74,7 +74,7 @@ struct MainView: View {
                     NavigationLink(destination: TrendView()) {
                         VStack {
                             Image(systemName: "chart.line.uptrend.xyaxis")
-                            Text("看趨勢")
+                            Text(LocalizedStringKey("VIEW_TREND"))
                         }
                         .foregroundColor(.white)
                     }
@@ -82,7 +82,7 @@ struct MainView: View {
                     NavigationLink(destination: SettingsView()) {
                         VStack {
                             Image(systemName: "person.badge.shield.checkered")
-                            Text("監督人")
+                            Text(LocalizedStringKey("SUPERVISOR"))
                         }
                         .foregroundColor(.white)
                     }
@@ -122,11 +122,11 @@ struct CheckInSheet: View {
         ZStack {
             Color.black.ignoresSafeArea()
             VStack(spacing: 30) {
-                Text("今天瘦了嗎？")
+                Text(LocalizedStringKey("TODAY_THINNER"))
                     .font(.system(size: 24, weight: .black))
                     .foregroundColor(.green)
                 
-                TextField("輸入體重 (kg)", text: $inputWeight)
+                TextField(LocalizedStringKey("ENTER_WEIGHT"), text: $inputWeight)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 50, weight: .bold))
@@ -135,7 +135,7 @@ struct CheckInSheet: View {
                     .background(Color.white.opacity(0.1))
                 
                 Button(action: onSave) {
-                    Text("面對現實")
+                    Text(LocalizedStringKey("FACE_REALITY"))
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()

@@ -11,25 +11,25 @@ struct SettingsView: View {
     
     var body: some View {
         Form {
-            Section(header: Text("個人信息")) {
-                TextField("你的名字", text: $userName)
-                TextField("目標體重 (kg)", text: $targetWeight)
+            Section(header: Text(LocalizedStringKey("PERSONAL_INFO"))) {
+                TextField(LocalizedStringKey("YOUR_NAME"), text: $userName)
+                TextField(LocalizedStringKey("TARGET_WEIGHT"), text: $targetWeight)
                     .keyboardType(.decimalPad)
             }
             
-            Section(header: Text("監督機制"), footer: Text("如果你連續 24 小時未簽到，系統將自動向該郵箱發送告狀信。")) {
-                TextField("監督人郵箱", text: $supervisorEmail)
+            Section(header: Text(LocalizedStringKey("SUPERVISION_MECHANISM")), footer: Text(LocalizedStringKey("SUPERVISOR_EMAIL_FOOTER"))) {
+                TextField(LocalizedStringKey("SUPERVISOR_EMAIL"), text: $supervisorEmail)
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
             }
             
-            Button("保存設置") {
+            Button(LocalizedStringKey("SAVE_SETTINGS")) {
                 saveSettings()
             }
             .frame(maxWidth: .infinity)
             .foregroundColor(.green)
         }
-        .navigationTitle("設置")
+        .navigationTitle(LocalizedStringKey("SETTINGS"))
         .onAppear {
             if let current = settings.first {
                 userName = current.userName

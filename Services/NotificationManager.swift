@@ -16,8 +16,8 @@ class NotificationManager {
     
     func scheduleDailyReminder() {
         let content = UNMutableNotificationContent()
-        content.title = "瘦了么？"
-        content.body = "今天還沒簽到！再不簽到我就要發郵件給你的監督人了！"
+        content.title = NSLocalizedString("DAILY_REMINDER_TITLE", comment: "")
+        content.body = NSLocalizedString("DAILY_REMINDER_BODY", comment: "")
         content.sound = .default
         
         var dateComponents = DateComponents()
@@ -31,8 +31,8 @@ class NotificationManager {
     
     func sendUrgentAlert() {
         let content = UNMutableNotificationContent()
-        content.title = "警告：減肥失敗預警"
-        content.body = "你已經 24 小時沒簽到了，監督人正在提刀趕來的路上..."
+        content.title = NSLocalizedString("WARNING_NOT_CHECKED_IN", comment: "")
+        content.body = NSLocalizedString("WARNING_NOT_CHECKED_IN", comment: "") // Body can be same as title for urgency
         content.sound = .defaultCritical
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)

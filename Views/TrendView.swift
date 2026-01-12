@@ -11,11 +11,11 @@ struct TrendView: View {
             
             VStack(spacing: 20) {
                 VStack(spacing: 8) {
-                    Text("體重趨勢")
+                    Text(LocalizedStringKey("VIEW_TREND"))
                         .font(.system(size: 32, weight: .black))
                         .foregroundColor(.white)
                     
-                    Text("數據不會騙人，脂肪在顫抖")
+                    Text(LocalizedStringKey("SLOGAN_FAT_TREMBLES"))
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
@@ -23,7 +23,7 @@ struct TrendView: View {
                 
                 if records.isEmpty {
                     Spacer()
-                    Text("尚無數據，你還在逃避什麼？")
+                    Text(LocalizedStringKey("NO_DATA_YET"))
                         .foregroundColor(.gray)
                     Spacer()
                 } else {
@@ -94,7 +94,7 @@ struct TrendView: View {
                 
                 Spacer()
                 
-                Text("「你可以不瘦，但你不能不面對」")
+                Text(LocalizedStringKey("NOT_THINNER_MUST_FACE"))
                     .font(.caption)
                     .italic()
                     .foregroundColor(.gray)
