@@ -13,51 +13,81 @@ struct MainView: View {
         ZStack {
             Color.black.ignoresSafeArea()
             
-            VStack {
+            VStack(spacing: 30) {
                 Spacer()
                 
-                Text("瘦了么")
-                    .font(.system(size: 60, weight: .black))
-                    .foregroundColor(.green)
+                VStack(spacing: 10) {
+                    Text("瘦了么")
+                        .font(.system(size: 70, weight: .black))
+                        .foregroundColor(.green)
+                    
+                    Text("体重不会骗人")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                        .tracking(5)
+                }
                 
                 if let currentSettings = settings.first {
-                    Text("已堅持 \(currentSettings.checkInStreak) 天")
-                        .font(.title2)
-                        .foregroundColor(.white)
+                    Text("已連續面對現實 \(currentSettings.checkInStreak) 天")
+                        .font(.title3)
+                        .foregroundColor(.white.opacity(0.8))
                 }
                 
                 Spacer()
                 
                 if let lastRecord = records.first, Calendar.current.isDateInToday(lastRecord.timestamp) {
-                    VStack {
-                        Image(systemName: "checkmark.circle.fill")
+                    VStack(spacing: 20) {
+                        Image(systemName: "exclamationmark.triangle.fill")
                             .resizable()
-                            .frame(width: 100, height: 100)
+                            .frame(width: 80, height: 70)
                             .foregroundColor(.green)
-                        Text("今日已簽到: \(lastRecord.weight, specifier: "%.1f") kg")
-                            .font(.headline)
+                        
+                        Text("今日已記錄: \(lastRecord.weight, specifier: "%.1f") kg")
+                            .font(.system(size: 24, weight: .bold))
                             .foregroundColor(.white)
+                        
+                        Text("沒瘦也得填，明天繼續。")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                     }
                 } else {
                     Button(action: { showingCheckIn = true }) {
-                        Text("立即簽到")
-                            .font(.title.bold())
-                            .foregroundColor(.black)
-                            .padding(.vertical, 20)
-                            .padding(.horizontal, 40)
-                            .background(Color.green)
-                            .cornerRadius(15)
+                        VStack(spacing: 10) {
+                            Text("立即簽到")
+                                .font(.system(size: 30, weight: .black))
+                            Text("你可以不瘦，但你不能不面對")
+                                .font(.caption)
+                        }
+                        .foregroundColor(.black)
+                        .padding(.vertical, 25)
+                        .padding(.horizontal, 40)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.green)
+                        .cornerRadius(0) // 硬朗風格
                     }
+                    .padding(.horizontal, 20)
                 }
                 
                 Spacer()
                 
-                NavigationLink(destination: SettingsView()) {
-                    Text("設置監督人")
-                        .foregroundColor(.gray)
-                        .underline()
+                HStack(spacing: 40) {
+                    NavigationLink(destination: TrendView()) {
+                        VStack {
+                            Image(systemName: "chart.line.uptrend.xyaxis")
+                            Text("看趨勢")
+                        }
+                        .foregroundColor(.white)
+                    }
+                    
+                    NavigationLink(destination: SettingsView()) {
+                        VStack {
+                            Image(systemName: "person.badge.shield.checkered")
+                            Text("監督人")
+                        }
+                        .foregroundColor(.white)
+                    }
                 }
-                .padding(.bottom, 30)
+                .padding(.bottom, 40)
             }
         }
         .sheet(isPresented: $showingCheckIn) {
@@ -89,26 +119,32 @@ struct CheckInSheet: View {
     var onSave: () -> Void
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text("輸入今日體重 (kg)")
-                .font(.headline)
-            
-            TextField("0.0", text: $inputWeight)
-                .keyboardType(.decimalPad)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .multilineTextAlignment(.center)
-                .font(.system(size: 40, weight: .bold))
-            
-            Button(action: onSave) {
-                Text("確認簽到")
-                    .frame(maxWidth: .infinity)
+        ZStack {
+            Color.black.ignoresSafeArea()
+            VStack(spacing: 30) {
+                Text("今天瘦了嗎？")
+                    .font(.system(size: 24, weight: .black))
+                    .foregroundColor(.green)
+                
+                TextField("輸入體重 (kg)", text: $inputWeight)
+                    .keyboardType(.decimalPad)
+                    .multilineTextAlignment(.center)
+                    .font(.system(size: 50, weight: .bold))
+                    .foregroundColor(.white)
                     .padding()
-                    .background(Color.green)
-                    .foregroundColor(.black)
-                    .cornerRadius(10)
+                    .background(Color.white.opacity(0.1))
+                
+                Button(action: onSave) {
+                    Text("面對現實")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.black)
+                }
             }
+            .padding()
         }
-        .padding()
-        .presentationDetents([.height(250)])
+        .presentationDetents([.height(350)])
     }
 }
